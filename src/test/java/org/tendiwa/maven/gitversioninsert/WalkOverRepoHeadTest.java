@@ -51,11 +51,10 @@ public final class WalkOverRepoHeadTest {
         }
         MatcherAssert.assertThat(
             paths,
-            Matchers.contains(Paths.get("file1"))
-        );
-        MatcherAssert.assertThat(
-            paths,
-            Matchers.contains(Paths.get("file2"))
+            Matchers.allOf(
+                Matchers.contains(Paths.get("file1")),
+                Matchers.contains(Paths.get("file2"))
+            )
         );
     }
 }
