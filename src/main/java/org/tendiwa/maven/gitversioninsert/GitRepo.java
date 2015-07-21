@@ -63,7 +63,9 @@ final class GitRepo {
      */
     public Collection<FileInGitSourceTree> headFiles() {
         final Collection<FileInGitSourceTree> files =
-            new ArrayList<>(GitRepo.ESTIMATED_NUMBER_OF_FILES);
+            new ArrayList<FileInGitSourceTree>(
+                GitRepo.ESTIMATED_NUMBER_OF_FILES
+            );
         final TreeWalk walk = new WalkOverRepoHead(this.git.getRepository());
         try {
             while (walk.next()) {

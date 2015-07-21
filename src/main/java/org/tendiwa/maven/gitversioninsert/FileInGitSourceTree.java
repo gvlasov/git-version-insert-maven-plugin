@@ -69,7 +69,9 @@ final class FileInGitSourceTree {
                         .getId()
                 )
                 .call();
-        } catch (IOException | GitAPIException e) {
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (GitAPIException e) {
             throw new RuntimeException(e);
         }
     }
