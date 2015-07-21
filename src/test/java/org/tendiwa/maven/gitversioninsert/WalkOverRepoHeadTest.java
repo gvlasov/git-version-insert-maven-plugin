@@ -28,6 +28,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
+import org.eclipse.jgit.treewalk.TreeWalk;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -40,9 +41,10 @@ import org.junit.Test;
 public final class WalkOverRepoHeadTest {
     @Test
     public void walksOverRepoHeadTest() throws Exception{
-        final WalkOverRepoHead walk = new WalkOverRepoHead(
-            new TestRepo()
-        );
+        final TreeWalk walk =
+            new WalkOverRepoHead(
+                new FakeGitTestRepo()
+            );
         Collection<Path> paths = new ArrayList<>();
         while (walk.next()) {
             paths.add(
@@ -51,9 +53,9 @@ public final class WalkOverRepoHeadTest {
         }
         MatcherAssert.assertThat(
             paths,
-            Matchers.allOf(
-                Matchers.contains(Paths.get("file1")),
-                Matchers.contains(Paths.get("file2"))
+            Matchers.containsInAnyOrder(
+                Paths.get("file1"),
+                Paths.get("file2")
             )
         );
     }
