@@ -24,12 +24,10 @@
 
 package org.tendiwa.maven.gitversioninsert;
 
+import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.internal.storage.file.FileRepository;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.After;
@@ -38,27 +36,24 @@ import org.junit.Test;
 
 /**
  * @author Georgy Vlasov (suseika@tendiwa.org)
- * @version $tendiwa-version$
+ * @version $stub$
  * @since 0.1
  */
 public final class FileWithReplaceTokensTest {
-
-    private Path newPath;
+    private Path tempFilePath;
 
     @Before
     public void setUp() throws Exception{
-        this.newPath = Paths.get(
-            FakeGitRepo.WORDKING_DIRECTORY_PATH + "/file1_copy"
+        this.tempFilePath = Files.createTempFile(
+            FileWithReplaceTokensTest.class.getName(),
+            "replacesToken"
         );
-        Files.copy(
-            Paths.get(FakeGitRepo.WORDKING_DIRECTORY_PATH + "/file1"),
-            this.newPath
-        );
+        new PrintWriter(tempFilePath.toFile()).print("Version 1");
     }
 
     @After
     public void tearDown() throws Exception {
-        Files.delete(this.newPath);
+        Files.delete(this.tempFilePath);
     }
 
     /**
@@ -68,30 +63,22 @@ public final class FileWithReplaceTokensTest {
     @Test
     public void replacesToken() throws Exception {
         new FileWithReplaceTokens(
-            new FileInGitSourceTree(
-                new Git(
-                    new FileRepository(
-                        FakeGitRepo.WORDKING_DIRECTORY_PATH+"/.git"
-                    )
-                ),
-                this.newPath.toAbsolutePath().toString()
-            )
+            this.tempFilePath.toAbsolutePath()
         ).replaceToken("Version", "Replacement");
         MatcherAssert.assertThat(
             this.firstLineInFile(),
-            Matchers.containsString("Replacement")
-        );
-        MatcherAssert.assertThat(
-            this.firstLineInFile(),
-            Matchers.not(
-                Matchers.containsString("Version")
+            Matchers.allOf(
+                Matchers.containsString("Replacement"),
+                Matchers.not(
+                    Matchers.containsString("Version")
+                )
             )
         );
     }
 
     private String firstLineInFile() throws Exception {
         return Files
-            .readAllLines(this.newPath, Charset.forName("UTF-8"))
+            .readAllLines(this.tempFilePath, Charset.forName("UTF-8"))
             .iterator()
             .next();
     }

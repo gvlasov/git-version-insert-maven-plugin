@@ -24,12 +24,39 @@
 
 package org.tendiwa.maven.gitversioninsert;
 
-/**
- * @author Georgy Vlasov (suseika@tendiwa.org)
- * @version $tendiwa-version$
- * @since 0.1
- */
-final class FakeGitRepo {
-    public static final String WORDKING_DIRECTORY_PATH =
-        "target/generated-test-resources/fakegit";
+import org.eclipse.jgit.api.Git;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
+
+public final class FileInGitWorkingTreeTest {
+    @Test
+    public void getsRevision() throws Exception {
+        MatcherAssert.assertThat(
+            new FileInGitWorkingTree(
+                new Git(
+                    new TestRepo()
+                ),
+                "file2"
+            ).lastRevision(),
+            Matchers.equalTo("0.2")
+        );
+    }
+
+    @Test
+    public void findsAbsolutePath() throws Exception {
+        final TestRepo repo = new TestRepo();
+        MatcherAssert.assertThat(
+            new FileInGitWorkingTree(
+                new Git(repo),
+                "file2"
+            ).absolutePath(),
+            Matchers.equalTo(
+                repo
+                    .workingDirectory()
+                    .resolve("file2")
+                    .toAbsolutePath()
+            )
+        );
+    }
 }

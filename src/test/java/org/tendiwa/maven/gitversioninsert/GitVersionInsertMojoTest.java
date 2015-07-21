@@ -38,14 +38,18 @@ import org.junit.Test;
 
 /**
  * @author Georgy Vlasov (suseika@tendiwa.org)
- * @version $tendiwa-version$
+ * @version $stub$
  * @since 0.1
  */
 public final class GitVersionInsertMojoTest {
-    public static final String BASEDIRPATH = "target/generated-test-resources/fake-maven-git";
+    public static final String PATH_TO_EXTRACTED_PROJECT =
+        "target/extracted-test-resources/fake-maven-git";
 
     @Rule
-    public final TestResources resources = new TestResources();
+    public final TestResources resources = new TestResources(
+        "target/extracted-test-resources/",
+        "target/test-projects/"
+    );
 
     @Rule
     public final TestMavenRuntime maven = new TestMavenRuntime();
@@ -56,7 +60,7 @@ public final class GitVersionInsertMojoTest {
     @Test
     public void replacesToken() throws Exception {
         File basedir = this.resources.getBasedir(
-            GitVersionInsertMojoTest.BASEDIRPATH
+            "fake-maven-git"
         );
         this.maven.executeMojo(
             basedir,
@@ -64,13 +68,15 @@ public final class GitVersionInsertMojoTest {
         );
         MatcherAssert.assertThat(
             this.fileToString(
-                BASEDIRPATH + "/src/main/java/org/tendiwa/fake/App.java"
+                GitVersionInsertMojoTest.PATH_TO_EXTRACTED_PROJECT +
+                    "/src/main/java/org/tendiwa/fake/App.java"
             ),
             Matchers.containsString("@version 0.1")
         );
         MatcherAssert.assertThat(
             this.fileToString(
-                BASEDIRPATH + "/src/main/test/org/tendiwa/fake/AppTest.java"
+                GitVersionInsertMojoTest.PATH_TO_EXTRACTED_PROJECT +
+                    "/src/main/test/org/tendiwa/fake/AppTest.java"
             ),
             Matchers.containsString("@version 0.2")
         );
@@ -83,7 +89,7 @@ public final class GitVersionInsertMojoTest {
     @Test
     public void canConfigureToken() throws Exception {
         File basedir = this.resources.getBasedir(
-            GitVersionInsertMojoTest.BASEDIRPATH
+            GitVersionInsertMojoTest.PATH_TO_EXTRACTED_PROJECT
         );
         this.maven.executeMojo(
             basedir,
@@ -95,13 +101,15 @@ public final class GitVersionInsertMojoTest {
         );
         MatcherAssert.assertThat(
             this.fileToString(
-                BASEDIRPATH + "/src/main/java/org/tendiwa/fake/App.java"
+                GitVersionInsertMojoTest.PATH_TO_EXTRACTED_PROJECT +
+                    "/src/main/java/org/tendiwa/fake/App.java"
             ),
             Matchers.containsString("class 0.1")
         );
         MatcherAssert.assertThat(
             this.fileToString(
-                BASEDIRPATH + "/src/test/java/org/tendiwa/fake/AppTest.java"
+                GitVersionInsertMojoTest.PATH_TO_EXTRACTED_PROJECT +
+                    "/src/test/java/org/tendiwa/fake/AppTest.java"
             ),
             Matchers.containsString("class 0.2")
         );

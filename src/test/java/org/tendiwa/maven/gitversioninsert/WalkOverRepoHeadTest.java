@@ -24,26 +24,38 @@
 
 package org.tendiwa.maven.gitversioninsert;
 
-import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.internal.storage.file.FileRepository;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Collection;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
-public final class FileInGitSourceTreeTest {
+/**
+ * @author Georgy Vlasov (suseika@tendiwa.org)
+ * @version $stub$
+ * @since 0.1
+ */
+public final class WalkOverRepoHeadTest {
     @Test
-    public void getsRevision() throws Exception {
+    public void walksOverRepoHeadTest() throws Exception{
+        final WalkOverRepoHead walk = new WalkOverRepoHead(
+            new TestRepo()
+        );
+        Collection<Path> paths = new ArrayList<>();
+        while (walk.next()) {
+            paths.add(
+                Paths.get(walk.getPathString()).getFileName()
+            );
+        }
         MatcherAssert.assertThat(
-            new FileInGitSourceTree(
-                new Git(
-                    new FileRepository(
-                        "target/generated-test-resources/fakegit/.git"
-                    )
-                ),
-                "file2"
-            ).lastRevision(),
-            Matchers.equalTo("0.2")
+            paths,
+            Matchers.contains(Paths.get("file1"))
+        );
+        MatcherAssert.assertThat(
+            paths,
+            Matchers.contains(Paths.get("file2"))
         );
     }
-
 }
