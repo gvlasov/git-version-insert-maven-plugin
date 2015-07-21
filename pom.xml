@@ -63,7 +63,7 @@
                             <goal>cp</goal>
                         </goals>
                         <configuration>
-                            <from>src/test/repo/test-repo.tar.gz</from>
+                            <from>src/test/resources/repo/test-repo.tar.gz</from>
                             <to>target/generated-test-resources/fakegit/</to>
                         </configuration>
                     </execution>
