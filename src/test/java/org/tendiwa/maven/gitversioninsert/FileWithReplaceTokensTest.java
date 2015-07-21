@@ -48,7 +48,9 @@ public final class FileWithReplaceTokensTest {
             FileWithReplaceTokensTest.class.getName(),
             "replacesToken"
         );
-        new PrintWriter(tempFilePath.toFile()).print("Version 1");
+        final PrintWriter writer = new PrintWriter(tempFilePath.toFile());
+        writer.print("Version 1");
+        writer.close();
     }
 
     @After
