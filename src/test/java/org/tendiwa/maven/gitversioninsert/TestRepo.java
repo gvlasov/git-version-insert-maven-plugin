@@ -34,23 +34,23 @@ import org.eclipse.jgit.internal.storage.file.FileRepository;
  * @version $stub$
  * @since 0.
  */
-public final class TestRepo extends FileRepository {
+class TestRepo extends FileRepository {
 
-    public static final String WORDKING_DIRECTORY_PATH =
-        "target/extracted-test-resources/fake-git";
+    private final String workingDirectoryPath;
 
     /**
      * Git repository generated during build for testing purposes.
      * @throws IOException Whenever superclass throws it.
      */
-    public TestRepo() throws IOException {
-        super(TestRepo.WORDKING_DIRECTORY_PATH + "/.git");
+    public TestRepo(String workingDirectoryPath) throws IOException {
+        super(workingDirectoryPath + "/.git");
+        this.workingDirectoryPath = workingDirectoryPath;
     }
 
     /**
      * @return Working directory above repository's .git directory.
      */
     public final Path workingDirectory() {
-        return Paths.get(TestRepo.WORDKING_DIRECTORY_PATH);
+        return Paths.get(this.workingDirectoryPath);
     }
 }

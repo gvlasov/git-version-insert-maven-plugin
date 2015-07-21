@@ -24,39 +24,17 @@
 
 package org.tendiwa.maven.gitversioninsert;
 
-import org.eclipse.jgit.api.Git;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import java.io.IOException;
 
-public final class FileInGitWorkingTreeTest {
-    @Test
-    public void getsRevision() throws Exception {
-        MatcherAssert.assertThat(
-            new FileInGitWorkingTree(
-                new Git(
-                    new FakeMavenGitTestRepo()
-                ),
-                "file2"
-            ).lastRevision(),
-            Matchers.equalTo("0.2")
-        );
-    }
-
-    @Test
-    public void findsAbsolutePath() throws Exception {
-        final TestRepo repo = new FakeMavenGitTestRepo();
-        MatcherAssert.assertThat(
-            new FileInGitWorkingTree(
-                new Git(repo),
-                "file2"
-            ).absolutePath(),
-            Matchers.equalTo(
-                repo
-                    .workingDirectory()
-                    .resolve("file2")
-                    .toAbsolutePath()
-            )
-        );
+/**
+ * Testing repository with the contents of
+ * src/test/resources/repo/fake-maven-git.zip archive.
+ * @author Georgy Vlasov (suseika@tendiwa.org)
+ * @version $stub$
+ * @since 0.1
+ */
+final class FakeGitTestRepo extends TestRepo {
+    public FakeGitTestRepo() throws IOException {
+        super("target/extracted-test-resources/fake-git");
     }
 }
