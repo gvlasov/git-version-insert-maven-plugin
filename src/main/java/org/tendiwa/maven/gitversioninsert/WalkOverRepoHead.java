@@ -32,7 +32,7 @@ import org.eclipse.jgit.treewalk.TreeWalk;
 /**
  * Recursive TreeWalk over the tree from HEAD ref of a repository.
  * @author Georgy Vlasov (suseika@tendiwa.org)
- * @version $tendiwa-version$
+ * @version $stub$
  * @since 0.1
  */
 final class WalkOverRepoHead extends TreeWalk {

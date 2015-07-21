@@ -29,30 +29,28 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 /**
  * @author Georgy Vlasov (suseika@tendiwa.org)
- * @version $tendiwa-version$
- * @since 0.
+ * @version $stub$
+ * @since 0.1
  */
 final class FileWithReplaceTokens {
-    private final FileInGitSourceTree file;
+    private final Path absolutePath;
 
-    FileWithReplaceTokens(FileInGitSourceTree file) {
-        this.file = file;
+    FileWithReplaceTokens(Path pathToFile) {
+        this.absolutePath = pathToFile.toAbsolutePath();
     }
 
     public void replaceToken(String token, String replacement) {
-        final Path path = Paths.get(this.file.path());
         final Charset charset = StandardCharsets.UTF_8;
         try {
             final String content =
                 new String(
-                    Files.readAllBytes(path),
+                    Files.readAllBytes(this.absolutePath),
                     charset
                 ).replaceAll(token, replacement);
-            Files.write(path, content.getBytes(charset));
+            Files.write(this.absolutePath, content.getBytes(charset));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

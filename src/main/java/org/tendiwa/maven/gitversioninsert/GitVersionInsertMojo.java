@@ -25,20 +25,28 @@ package org.tendiwa.maven.gitversioninsert;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.project.MavenProject;
 
 /**
  * Mojo for <pre>git-version-insert-maven-plugin:insert-version</pre>
  * @author Georgy Vlasov (suseika@tendiwa.org)
- * @version $tendiwa-version$
+ * @version $stub$
  * @since 0.1
  */
 @Mojo(name = "insert-version")
 public class GitVersionInsertMojo extends AbstractMojo {
+    @Parameter(defaultValue = "${project}", required = true, readonly = true)
+    private MavenProject project;
+
     public void execute() {
-        for (FileInGitSourceTree file : new GitRepo(".").headFiles()) {
-            new FileWithReplaceTokens(file)
+        final WorkingDirectory repo = new WorkingDirectory(
+            this.project.getBasedir().getAbsolutePath()
+        );
+        for (FileInGitWorkingTree file : repo.headFiles()) {
+            new FileWithReplaceTokens(file.absolutePath())
                 .replaceToken(
-                    "$tendiwa-version$",
+                    "$stub$",
                     file.lastRevision()
                 );
         }
