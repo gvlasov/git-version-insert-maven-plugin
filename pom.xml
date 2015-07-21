@@ -12,7 +12,9 @@
     <packaging>maven-plugin</packaging>
     <version>1.0-SNAPSHOT</version>
     <name>git-version-insert-maven-plugin Maven Mojo</name>
-    <description>Maven plugin that can insert last git revision of a file inside that file</description>
+    <description>Maven plugin that can keep track of modification version for
+        individual files by inserting version tag name from git into those
+        files</description>
     <url>https://github.com/Suseika/git-version-insert-maven-plugin</url>
     <licenses>
         <license>
