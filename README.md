@@ -15,21 +15,19 @@ javadocs.
 
 # Plugin setup
 
-Add the following to your `pom.xml`:
+Add the following to a `<plugins>` section in your `pom.xml`, preferably
+under some profile (you generally don't want this plugin to run on every build):
 
 ```xml
-<build>
-    <plugins>
-        <plugin>
-            <groupId>org.tendiwa</groupId>
-            <artifactId>git-version-insert-maven-plugin</artifactId>
-            <version>0.1</version>
-        </plugin>
-        ...
-    </plugins>
-    ...
-</build>
+<plugin>
+    <groupId>org.tendiwa</groupId>
+    <artifactId>git-version-insert-maven-plugin</artifactId>
+    <version>0.1</version>
+</plugin>
 ```
+
+That's it, no configuration is required.
+
 # Example scenario
 
 In your Maven project you have a file `src/main/java/org/myproject/App
@@ -41,6 +39,7 @@ In your Maven project you have a file `src/main/java/org/myproject/App
  * @version $version-stub$
  * @since 0.1
  */
+...
 ```
 
 And you also have this in file `src/test/java/org/myrpoject/AppTest.java`:
@@ -51,6 +50,7 @@ And you also have this in file `src/test/java/org/myrpoject/AppTest.java`:
  * @version $version-stub$
  * @since 0.2
  */
+...
 ```
 
 You have three tags in your repository indicating release versions: `0.1`, `0
@@ -68,6 +68,7 @@ goal in your Maven build, the contents of the files in your working directory
  * @version 0.1
  * @since 0.1
  */
+...
 ```
 
 `src/test/java/org/myrpoject/AppTest.java`:
@@ -78,14 +79,15 @@ goal in your Maven build, the contents of the files in your working directory
  * @version 0.3
  * @since 0.2
  */
+...
 ```
 
 # Using this plugin to create release artifacts
 
 You use this plugin in a similar manner to [versions:set goal in
 versions-maven-plugin](http://www.mojohaus.org/versions-maven-plugin/set-mojo
-.html): unlike most plugins, these both operate not on your `target`
-directory (that is cleaned with `mvn clean`), but on your sources.
+.html): unlike most plugins, these both operate *not* on your `target`
+directory (that is cleaned with `mvn clean`), but on your *sources*.
 
 Recommended workflow is:
 
