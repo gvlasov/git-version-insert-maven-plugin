@@ -29,7 +29,7 @@ import io.takari.maven.testing.TestResources;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.Path;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Ignore;
@@ -55,28 +55,28 @@ public final class GitVersionInsertMojoTest {
     public final TestMavenRuntime maven = new TestMavenRuntime();
 
     /**
-     * Replaces a token in each file with that file's last version tag name.
+     * Can replaces a token in each file with that file's last version tag name.
      */
     @Test
     public void replacesToken() throws Exception {
-        File basedir = this.resources.getBasedir(
-            "fake-maven-git"
-        );
+        File basedir = this.resources.getBasedir("fake-maven-git");
         this.maven.executeMojo(
             basedir,
             "insert-version"
         );
         MatcherAssert.assertThat(
             this.fileToString(
-                GitVersionInsertMojoTest.PATH_TO_EXTRACTED_PROJECT +
-                    "/src/main/java/org/tendiwa/fake/App.java"
+                basedir.toPath().resolve(
+                    "src/main/java/org/tendiwa/fake/App.java"
+                )
             ),
             Matchers.containsString("@version 0.1")
         );
         MatcherAssert.assertThat(
             this.fileToString(
-                GitVersionInsertMojoTest.PATH_TO_EXTRACTED_PROJECT +
-                    "/src/main/test/org/tendiwa/fake/AppTest.java"
+                basedir.toPath().resolve(
+                    "src/test/java/org/tendiwa/fake/AppTest.java"
+                )
             ),
             Matchers.containsString("@version 0.2")
         );
@@ -101,15 +101,17 @@ public final class GitVersionInsertMojoTest {
         );
         MatcherAssert.assertThat(
             this.fileToString(
-                GitVersionInsertMojoTest.PATH_TO_EXTRACTED_PROJECT +
+                basedir.toPath().resolve(
                     "/src/main/java/org/tendiwa/fake/App.java"
+                )
             ),
             Matchers.containsString("class 0.1")
         );
         MatcherAssert.assertThat(
             this.fileToString(
-                GitVersionInsertMojoTest.PATH_TO_EXTRACTED_PROJECT +
+                basedir.toPath().resolve(
                     "/src/test/java/org/tendiwa/fake/AppTest.java"
+                )
             ),
             Matchers.containsString("class 0.2")
         );
@@ -119,14 +121,10 @@ public final class GitVersionInsertMojoTest {
 
     /**
      * Reads a UTF-8 file into a string.
-     * @param filePath Path to a file.
+     * @param path Path to a file.
      * @return String with file's content.
      */
-    private String fileToString(String filePath) throws IOException {
-        return new String(
-            Files.readAllBytes(
-                Paths.get(filePath)
-            )
-        );
+    private String fileToString(Path path) throws IOException {
+        return new String(Files.readAllBytes(path));
     }
 }
