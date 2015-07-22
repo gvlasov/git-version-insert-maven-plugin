@@ -10,7 +10,7 @@
     </parent>
     <artifactId>git-version-insert-maven-plugin</artifactId>
     <packaging>maven-plugin</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.1</version>
     <name>git-version-insert-maven-plugin Maven Mojo</name>
     <description>Maven plugin that can keep track of modification version for
         individual files by inserting version tag name from git into those
