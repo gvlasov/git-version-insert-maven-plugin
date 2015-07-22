@@ -36,7 +36,7 @@ import org.junit.Test;
 
 /**
  * @author Georgy Vlasov (suseika@tendiwa.org)
- * @version $stub$
+ * @version $version-stub$
  * @since 0.1
  */
 public final class FileWithReplaceTokensTest {

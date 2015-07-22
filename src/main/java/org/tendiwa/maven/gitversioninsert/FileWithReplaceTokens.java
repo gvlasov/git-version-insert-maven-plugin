@@ -32,7 +32,7 @@ import java.nio.file.Path;
 
 /**
  * @author Georgy Vlasov (suseika@tendiwa.org)
- * @version $stub$
+ * @version $version-stub$
  * @since 0.1
  */
 final class FileWithReplaceTokens {

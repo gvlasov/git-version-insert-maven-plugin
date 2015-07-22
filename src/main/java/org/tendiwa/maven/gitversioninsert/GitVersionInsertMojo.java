@@ -31,7 +31,7 @@ import org.apache.maven.project.MavenProject;
 /**
  * Mojo for <pre>git-version-insert-maven-plugin:insert-version</pre>
  * @author Georgy Vlasov (suseika@tendiwa.org)
- * @version $stub$
+ * @version $version-stub$
  * @since 0.1
  */
 @Mojo(name = "insert-version")
@@ -46,7 +46,7 @@ public class GitVersionInsertMojo extends AbstractMojo {
         for (FileInGitWorkingTree file : repo.headFiles()) {
             new FileWithReplaceTokens(file.absolutePath())
                 .replaceToken(
-                    "$stub$",
+                    "$version-stub$",
                     file.lastRevision()
                 );
         }

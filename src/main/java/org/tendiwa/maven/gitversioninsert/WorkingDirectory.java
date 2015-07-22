@@ -34,7 +34,7 @@ import org.eclipse.jgit.treewalk.TreeWalk;
 /**
  * Working directory of a git repository.
  * @author Georgy Vlasov (suseika@tendiwa.org)
- * @version $stub$
+ * @version $version-stub$
  * @since 0.1
  */
 final class WorkingDirectory {

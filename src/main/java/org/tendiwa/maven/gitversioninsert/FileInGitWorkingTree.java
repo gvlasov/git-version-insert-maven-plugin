@@ -31,7 +31,7 @@ import org.eclipse.jgit.api.errors.GitAPIException;
 /**
  * File in a working directory under Git.
  * @author Georgy Vlasov (suseika@tendiwa.org)
- * @version $stub$
+ * @version $version-stub$
  * @since 0.1
  */
 final class FileInGitWorkingTree {

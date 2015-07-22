@@ -30,7 +30,7 @@ import java.io.IOException;
  * Testing repository with the contents of
  * src/test/resources/repo/fake-maven-git.zip archive.
  * @author Georgy Vlasov (suseika@tendiwa.org)
- * @version $stub$
+ * @version $version-stub$
  * @since 0.1
  */
 final class FakeGitTestRepo extends TestRepo {
