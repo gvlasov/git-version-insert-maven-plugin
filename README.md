@@ -1,4 +1,4 @@
-
+[![Build Status](https://travis-ci.org/Suseika/git-version-insert-maven-plugin.svg?branch=master)](https://travis-ci.org/Suseika/git-version-insert-maven-plugin)
 
 # git-version-insert-maven-plugin
 
