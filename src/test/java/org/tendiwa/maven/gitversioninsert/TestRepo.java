@@ -32,7 +32,7 @@ import org.eclipse.jgit.internal.storage.file.FileRepository;
 /**
  * @author Georgy Vlasov (suseika@tendiwa.org)
  * @version $version-stub$
- * @since 0.
+ * @since 0.1
  */
 class TestRepo extends FileRepository {
 

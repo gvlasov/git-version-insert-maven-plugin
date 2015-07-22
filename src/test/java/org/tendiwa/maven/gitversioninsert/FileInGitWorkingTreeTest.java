@@ -29,6 +29,11 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
+/**
+ * @author Georgy Vlasov (suseika@tendiwa.org)
+ * @version $version-stub$
+ * @since 0.1
+ */
 public final class FileInGitWorkingTreeTest {
     @Test
     public void getsRevision() throws Exception {
