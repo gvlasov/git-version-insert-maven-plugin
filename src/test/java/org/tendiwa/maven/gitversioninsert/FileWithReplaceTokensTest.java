@@ -78,6 +78,18 @@ public final class FileWithReplaceTokensTest {
         );
     }
 
+    /**
+     * {@link FileWithReplaceTokens} can see if its argument file doesn't
+     * exist and the constructor will fail in that case.
+     * @throws Exception
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void failAtNonExistentFile() throws Exception {
+        new FileWithReplaceTokens(
+            this.tempFilePath.resolve("more-nesting")
+        );
+    }
+
     private String firstLineInFile() throws Exception {
         return Files
             .readAllLines(this.tempFilePath, Charset.forName("UTF-8"))

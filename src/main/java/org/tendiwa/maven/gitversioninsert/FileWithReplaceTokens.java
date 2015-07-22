@@ -39,6 +39,11 @@ final class FileWithReplaceTokens {
     private final Path absolutePath;
 
     FileWithReplaceTokens(Path pathToFile) {
+        if (!pathToFile.toFile().exists()) {
+            throw new IllegalArgumentException(
+                "File " + pathToFile + " doesn't exist"
+            );
+        }
         this.absolutePath = pathToFile.toAbsolutePath();
     }
 
@@ -49,7 +54,7 @@ final class FileWithReplaceTokens {
                 new String(
                     Files.readAllBytes(this.absolutePath),
                     charset
-                ).replaceAll(token, replacement);
+                ).replace(token, replacement);
             Files.write(this.absolutePath, content.getBytes(charset));
         } catch (IOException e) {
             throw new RuntimeException(e);
